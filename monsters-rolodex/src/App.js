@@ -1,7 +1,8 @@
 import { Component } from "react";
 import "./App.css";
+import CardList from "./components/card-list/card-list.component";
 
-class App extends Component {
+class App extends Component { // All of the entire UI is encapsulated in App Component
   constructor() {
     super();
     this.state = {
@@ -19,6 +20,7 @@ class App extends Component {
         })
       );
   }
+
   onSearchChange = (event) => { 
     const searchField = event.target.value.toLocaleLowerCase(); //Jo hum search type krein gey
 
@@ -35,7 +37,7 @@ component onto the page that is mounting.*/
     //Yeh Dikhana hai
     const {monsters, searchField} = this.state;
     const {onSearchChange} = this;
-    
+
     const filteredMonsters = monsters.filter((monster) => {
       return monster.name.toLocaleLowerCase().includes(searchField); //IMP NOTE: jo SearchFeild mein likha gaya hai voh agar INCLUDED hai toh return True and Save it to FilteredMonsters.
       /* So now filtered monsters should be. Using the state search field because we're updating it in the same way.*/
@@ -50,21 +52,22 @@ component onto the page that is mounting.*/
           onChange={onSearchChange} // now it NOT going to re-initialize the anonymous function again & again eveytime render gets called.
         />
 
-        {filteredMonsters.map((monster) => {
-          //using .map() we want this method to return us an array of bunch of HTML h1s element with the shape that we expect the HTML to render.
-          //monster in callback is a parameter that represents the current element of the array during each iteration of the map
-          return (
-            <div key={monster.id}>
-              {" "}
-              <h1> {monster.name}</h1>{" "}
-            </div>
-          );
+          {/* {filteredMonsters.map((monster) => {
+          // //   using map () we want this method to return us an array of bunch of HTML h1s element with the shape that we expect the HTML to render
+          // // monster in callback is a parameter that represents the current element of the array during each iteration of the map 
+          // return (
+          //   <div key={monster.id}>
+          //     {" "}
+          //     <h1> {monster.name}</h1>{" "}
+          //   </div>
+          // );
+        })} */}
 
-          /* 1- For each monster in the monsters array, the arrow function is called.
+        <CardList monsters = {filteredMonsters} />
+      </div>
+        /* 1- For each monster in the monsters array, the arrow function is called.
         2- Inside the arrow function, an <h1> element is created with the name of the current monster.
         3- The map function returns an array of these <h1> elements.*/
-        })}
-      </div>
     );
   }
 }
