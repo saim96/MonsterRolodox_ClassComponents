@@ -1,13 +1,17 @@
 import { Component } from "react";
+import Card from "../card/card.compent";
+import "./card-list.styles.css";
 
 class CardList extends Component {
   render() {
     const { monsters } = this.props; //De-structure is because if we need to use this in more places than one, it's just easier
-    return ( //parental div
-      <div> 
-        {monsters.map((monster) => (
-          <h1 key={monster.id}>{monster.name}</h1>
-        ))}
+    return (
+      //parental div
+
+      <div className="card-list">
+        {monsters.map((monster) => {
+          return <Card monster={monster} />;
+        })}
       </div>
     );
   }
