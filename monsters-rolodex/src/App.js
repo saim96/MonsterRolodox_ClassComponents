@@ -20,7 +20,7 @@ class App extends Component {
       .then((response) => response.json()) //JSON stands for JavaScript Object Notation. JSON is a lightweight format for storing and transporting data.
       .then((users) =>
         this.setState(() => {
-          // Whenever setState gets called render() gets called again
+          // Whenever setState gets called, render() gets called again
           return { monsters: users };
         })
       );
@@ -52,6 +52,13 @@ component onto the page that is mounting.*/
 
     return (
       <div className="App">
+        <SearchBox
+          className="search-box"
+          onChangeHandler={onSearchChange}
+          placeholder="search monsters"
+        />
+        <CardList monsters={filteredMonsters} />
+
         {/* {filteredMonsters.map((monster) => {
           // //   using map () we want this method to return us an array of bunch of HTML h1s element with the shape that we expect the HTML to render
           // // monster in callback is a parameter that represents the current element of the array during each iteration of the map 
@@ -62,12 +69,8 @@ component onto the page that is mounting.*/
           //   </div>
           // );
         })} */}
-        <SearchBox 
-        className='search-box'
-        onSearchChangeHandler={onSearchChange} 
-        placeholder={'search monsters'}/>
-        <CardList monsters={filteredMonsters} />
       </div>
+
       /* 1- For each monster in the monsters array, the arrow function is called.
         2- Inside the arrow function, an <h1> element is created with the name of the current monster.
         3- The map function returns an array of these <h1> elements.*/
