@@ -1,9 +1,12 @@
 import { Component } from "react";
+import SearchBox from "./components/search-box/search-box.component";
 import "./App.css";
 import CardList from "./components/card-list/card-list.component";
 
-class App extends Component { // All of the entire UI is encapsulated in App Component
+class App extends Component {
+  // All of the entire UI is encapsulated in App Component
   constructor() {
+    //App is initialized
     super();
     this.state = {
       monsters: [],
@@ -11,23 +14,26 @@ class App extends Component { // All of the entire UI is encapsulated in App Com
     };
   }
 
-  componentDidMount() { // Now class Component is going to only build it once when it initializes the class for the first time because it's a method.
+  componentDidMount() {
+    // Now class Component is going to only build it once when it initializes the class for the first time because it's a method.
     fetch("https://jsonplaceholder.typicode.com/users")
       .then((response) => response.json()) //JSON stands for JavaScript Object Notation. JSON is a lightweight format for storing and transporting data.
       .then((users) =>
         this.setState(() => {
+          // Whenever setState gets called render() gets called again
           return { monsters: users };
         })
       );
   }
 
-  onSearchChange = (event) => { 
+  onSearchChange = (event) => {
     const searchField = event.target.value.toLocaleLowerCase(); //Jo hum search type krein gey
 
     this.setState(() => {
+      //whenever setState is called, render gets called agains.
       return { searchField };
     });
-  }
+  };
   /*So components at Mount is a method that you have access to and inside you want to write your code and
 whatever you write here will get run whenever the component mounts.
 Mounting is the first time a component gets placed onto the DOM, so the first time react renders a
@@ -35,8 +41,9 @@ component onto the page that is mounting.*/
 
   render() {
     //Yeh Dikhana hai
-    const {monsters, searchField} = this.state;
-    const {onSearchChange} = this;
+    console.log("render");
+    const { monsters, searchField } = this.state;
+    const { onSearchChange } = this;
 
     const filteredMonsters = monsters.filter((monster) => {
       return monster.name.toLocaleLowerCase().includes(searchField); //IMP NOTE: jo SearchFeild mein likha gaya hai voh agar INCLUDED hai toh return True and Save it to FilteredMonsters.
@@ -45,14 +52,7 @@ component onto the page that is mounting.*/
 
     return (
       <div className="App">
-        <input
-          className="search-box"
-          type="search"
-          placeholder="search monster"
-          onChange={onSearchChange} // now it NOT going to re-initialize the anonymous function again & again eveytime render gets called.
-        />
-
-          {/* {filteredMonsters.map((monster) => {
+        {/* {filteredMonsters.map((monster) => {
           // //   using map () we want this method to return us an array of bunch of HTML h1s element with the shape that we expect the HTML to render
           // // monster in callback is a parameter that represents the current element of the array during each iteration of the map 
           // return (
@@ -62,10 +62,13 @@ component onto the page that is mounting.*/
           //   </div>
           // );
         })} */}
-
-        <CardList monsters = {filteredMonsters} />
+        <SearchBox 
+        className='search-box'
+        onSearchChangeHandler={onSearchChange} 
+        placeholder={'search monsters'}/>
+        <CardList monsters={filteredMonsters} />
       </div>
-        /* 1- For each monster in the monsters array, the arrow function is called.
+      /* 1- For each monster in the monsters array, the arrow function is called.
         2- Inside the arrow function, an <h1> element is created with the name of the current monster.
         3- The map function returns an array of these <h1> elements.*/
     );

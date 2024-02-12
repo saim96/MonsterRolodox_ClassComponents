@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root')); //Kahan dikhana hai
 //document mein root ID waley element mein dikhana hai
-root.render(
+root.render( // React renders on Mount and rerenders on setState is caleed and props change 
   //Kyah dikhana hai
   <React.StrictMode>
     <App />
